@@ -1,0 +1,20 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Here i introduces my very first ai project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Haseeb Ullah",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ihaseebullah/My_GPT.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ihaseebullah/My_GPT/issues"
+  },
+  "homepage": "https://github.com/ihaseebullah/My_GPT#readme"
+}
