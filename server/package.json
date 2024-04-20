@@ -16,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/ihaseebullah/My_GPT/issues"
   },
-  "homepage": "https://github.com/ihaseebullah/My_GPT#readme"
+  "homepage": "https://github.com/ihaseebullah/My_GPT#readme",
+  "dependencies": {
+    "@google/generative-ai": "^0.7.1",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
 }
