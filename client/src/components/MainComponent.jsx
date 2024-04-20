@@ -2,13 +2,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import MessageCard from "./MessageCard";
 import Ddev from "../assets/Ddev Logo.png";
-
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 export default function MainComponent() {
   const [message, setMessage] = useState("Loading...");
   const [input, setInput] = useState("Loading...");
   const [prompt, setPrompt] = useState("");
   const [promptArray, setPromptArray] = useState([]);
   const [tempPrompt, setTempPrompt] = useState("");
+  const [loading, setLoading] = useState(false);
   const headers = {
     "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
   };
@@ -32,6 +34,7 @@ export default function MainComponent() {
   };
 
   function sendRequest() {
+    setLoading(true);
     axios.post("/", { prompt }, { headers }).then((res) => {
       let promptObject = {
         date: new Date(),
@@ -39,13 +42,13 @@ export default function MainComponent() {
         from: "Ai",
       };
       setPromptArray((prevArray) => [...prevArray, promptObject]); // Append the new prompt to the existing array
+      setLoading(false);
     });
   }
   return (
     <div className="main-container container">
-        
       <div className="message-container">
-      <img src={Ddev} style={{maxWidth:"5rem"}}/>
+        <img src={Ddev} style={{ maxWidth: "5rem" }} />
         <br />
         <h1>{message}</h1>
       </div>
@@ -63,6 +66,7 @@ export default function MainComponent() {
               );
             })}
           </div>
+          {loading && <Skeleton count={5} />}
         </div>
       </div>
       <div className="input-container py-3">

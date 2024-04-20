@@ -1,7 +1,7 @@
 .main-container {
   display: flex;
   flex-direction: column;
-  height: 97vh;
+  min-height: 90vh;
 }
 
 .message-container {
