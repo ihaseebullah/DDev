@@ -48,10 +48,15 @@ export default function MainComponent() {
   return (
     <div className="main-container container">
       <div className="message-container">
-        <img src={Ddev} style={{ maxWidth: "5rem" }} />
-        <br />
-        <h1>{message}</h1>
+        <div className="rounded-circle p-2 shadow" style={{border:"0.1rem solid black"}}>
+          <img src={Ddev} style={{ maxWidth: "5rem",maxHeight:'5rem',minHeight:'5rem',minWidth:'5rem' }} />
+        </div>
+        <div>
+            <br />
+          <h3>{message}</h3>
+        </div>
       </div>
+
       <div className="row">
         <div className="col-11">
           <div>
@@ -66,8 +71,8 @@ export default function MainComponent() {
               );
             })}
           </div>
-          {loading && <Skeleton count={5} />}
         </div>
+        {loading && <Skeleton count={5} />}
       </div>
       <div className="input-container py-3">
         <form onSubmit={sendPrompt}>

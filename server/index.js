@@ -12,11 +12,11 @@ app.use(cors({
 }))
 app.get('/', async (req, res) => {
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-    const prompt = `Hello`
+    const prompt = `Qoute a quranic verse`
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
-    
+
     let message = text
     res.json({ message })
 })
