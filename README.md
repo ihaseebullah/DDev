@@ -1,4 +1,4 @@
-# Ddev (Decent Developer)
+# DDev (Decent Developer)
 
 My GPT is a project developed by Haseeb Ullah, introducing his very first AI project. It consists of both a server-side component and a client-side component.
 
