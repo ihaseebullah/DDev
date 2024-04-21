@@ -52,30 +52,30 @@ To set up the project locally, follow these steps:
 
 1. Clone the repository:
 
-https://github.com/ihaseebullah/DDev.git
+`https://github.com/ihaseebullah/DDev.git`
 
 2. Navigate to the server directory:
 
 3. Install server dependencies:
-npm install
+`npm install`
 
 4. Configure environment variables by creating a `.env` file and adding your configuration details.
 
 5. Start the server:
 
-npm start
+`npm start`
 
 6. In a new terminal window, navigate to the client directory:
 
-cd ../client
+`cd ../client`
 
 7. Install client dependencies:
 
-npm install
+`npm install`
 
 8. Start the client:
 
-npm run dev
+`npm run dev`
 
 
 ## Contributing
