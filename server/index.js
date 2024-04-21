@@ -29,6 +29,33 @@ app.post('/', async (req, res) => {
     let message = text
     res.json({ message })
 })
+
+app.post('/api/MTC/', async (req, res) => {
+    function removePropertiesFromArray(array) {
+        if (req.body.history) {
+            return array.map(obj => {
+                const { date, prompt, from, ...rest } = obj;
+                return rest;
+            });
+        } else {
+            return [];
+        }
+    }
+    const history = removePropertiesFromArray(req.body.history);
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+    const chat = model.startChat({
+        history: history,
+        generationConfig: {
+            maxOutputTokens: 100,
+        },
+    });
+    const msg = req.body.prompt;
+    const result = await chat.sendMessage(msg);
+    const response = await result.response;
+    const text = response.text();
+    res.json({ message: text })
+})
 app.listen(3000, () => {
     console.log("Listening on port 3000")
 })

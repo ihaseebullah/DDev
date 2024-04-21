@@ -4,6 +4,8 @@ import MessageCard from "./MessageCard";
 import Ddev from "../assets/Ddev Logo.png";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import Select from "react-select";
+import quranicVerses from "../lib/intro";
 export default function MainComponent() {
   const [message, setMessage] = useState("Loading...");
   const [input, setInput] = useState("Loading...");
@@ -11,14 +13,12 @@ export default function MainComponent() {
   const [promptArray, setPromptArray] = useState([]);
   const [tempPrompt, setTempPrompt] = useState("");
   const [loading, setLoading] = useState(false);
+  const [mode, setMode] = useState("");
   const headers = {
     "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
   };
   useEffect(() => {
-    axios.get("/").then((res) => {
-      setMessage(res.data.message);
-      setInput(res.data.input);
-    });
+    setMessage(quranicVerses[Math.floor(Math.random() * 19)]);
   }, []);
   const sendPrompt = (e) => {
     e.preventDefault();
@@ -26,6 +26,8 @@ export default function MainComponent() {
       date: new Date(),
       prompt: prompt,
       from: "You",
+      role: "user",
+      parts: [{ text: prompt }],
     };
     setPromptArray((prevArray) => [...prevArray, promptObject]); // Append the new prompt to the existing array
     setTempPrompt(prompt);
@@ -35,24 +37,63 @@ export default function MainComponent() {
 
   function sendRequest() {
     setLoading(true);
-    axios.post("/", { prompt }, { headers }).then((res) => {
-      let promptObject = {
-        date: new Date(),
-        prompt: res.data.message,
-        from: "Ai",
-      };
-      setPromptArray((prevArray) => [...prevArray, promptObject]); // Append the new prompt to the existing array
-      setLoading(false);
-    });
+    if (mode === "MTC") {
+      ///MTC Implementation
+      axios
+        .post("/api/MTC/", { prompt, history: promptArray }, { headers })
+        .then((res) => {
+          let promptObject = {
+            date: new Date(),
+            prompt: res.data.message,
+            from: "Ai",
+            role: "model",
+            parts: [{ text: res.data.message }],
+          };
+          setPromptArray((prevArray) => [...prevArray, promptObject]); // Append the new prompt to the existing array
+          setLoading(false);
+        });
+    } else {
+      axios.post("/", { prompt }, { headers }).then((res) => {
+        let promptObject = {
+          date: new Date(),
+          prompt: res.data.message,
+          from: "Ai",
+        };
+        setPromptArray((prevArray) => [...prevArray, promptObject]); // Append the new prompt to the existing array
+        setLoading(false);
+      });
+    }
   }
+  const options = [
+    { value: "MTC", label: "Multi Turn Chat" },
+    { value: "GSC", label: "Gemini One Turn" },
+  ];
+
   return (
     <div className="main-container container">
+      <Select
+        options={options}
+        onChange={(selected) => {
+          setMode(selected.value);
+        }}
+      />
       <div className="message-container">
-        <div className="rounded-circle p-2 shadow" style={{border:"0.1rem solid black"}}>
-          <img src={Ddev} style={{ maxWidth: "5rem",maxHeight:'5rem',minHeight:'5rem',minWidth:'5rem' }} />
+        <div
+          className="rounded-circle p-2 shadow"
+          style={{ border: "0.1rem solid black" }}
+        >
+          <img
+            src={Ddev}
+            style={{
+              maxWidth: "5rem",
+              maxHeight: "5rem",
+              minHeight: "5rem",
+              minWidth: "5rem",
+            }}
+          />
         </div>
         <div>
-            <br />
+          <br />
           <h3>{message}</h3>
         </div>
       </div>
